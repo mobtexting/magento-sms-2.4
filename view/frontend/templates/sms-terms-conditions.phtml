@@ -1,0 +1,24 @@
+<?php
+
+/** @var \Magento\Framework\View\Element\Template $block */
+
+$modalContent = $block->getData('terms_conditions_view_model')->getContent();
+?>
+<div data-bind="scope: 'sms-terms-conditions-component'" class="sms-terms-conditions-container">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "sms-terms-conditions-component": {
+                        "component": "Mobtexting_SMSNotifications/js/view/sms-terms-conditions",
+                        "modalTitle": "<?= $block->escapeJs(__('Terms and Conditions')) ?>",
+                        "modalContent": "<?= $block->escapeHtml($modalContent) ?>"
+                    }
+                }
+            }
+        }
+    }
+</script>

@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Mobtexting SMS Notifications powered by LINK Mobility
+ *
+ * Sends transactional SMS notifications through the LINK Mobility messaging
+ * service.
+ * 
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Mobtexting\SMSNotifications\Api\MobileTelephoneNumberManagementInterface" type="Mobtexting\SMSNotifications\Model\MobileTelephoneNumberManagement"/>
+    <preference for="Mobtexting\SMSNotifications\Api\SmsSubscriptionManagementInterface" type="Mobtexting\SMSNotifications\Model\SmsSubscriptionManagement"/>
+    <preference for="Mobtexting\SMSNotifications\Api\SmsSubscriptionRepositoryInterface" type="Mobtexting\SMSNotifications\Model\SmsSubscriptionRepository"/>
+    <preference for="Mobtexting\SMSNotifications\Api\Data\SmsSubscriptionInterface" type="Mobtexting\SMSNotifications\Model\Data\SmsSubscription"/>
+    <preference for="Mobtexting\SMSNotifications\Api\Data\TelephonePrefixInterface" type="Mobtexting\SMSNotifications\Model\Data\TelephonePrefix"/>
+    <preference for="Mobtexting\SMSNotifications\Api\ConfigInterface" type="Mobtexting\SMSNotifications\Model\Config"/>
+    <preference for="Mobtexting\SMSNotifications\Gateway\ApiClientInterface" type="Mobtexting\SMSNotifications\Gateway\ApiClient"/>
+    <preference for="Mobtexting\SMSNotifications\Util\TemplateProcessorInterface" type="Mobtexting\SMSNotifications\Util\TemplateProcessor"/>
+    <type name="Mobtexting\SMSNotifications\Logger\Handler\FileHandler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+    <type name="Mobtexting\SMSNotifications\Logger\Logger">
+        <arguments>
+            <argument name="name" xsi:type="string">sms_notifications</argument>
+            <argument name="handlers" xsi:type="array">
+                <item name="debug" xsi:type="object">Mobtexting\SMSNotifications\Logger\Handler\FileHandler</item>
+            </argument>
+            <argument name="processors" xsi:type="array">
+                <item name="sensitiveDataProcessor" xsi:type="object">Mobtexting\SMSNotifications\Logger\Processor\SensitiveDataProcessor</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Mobtexting\SMSNotifications\Model\Config\Backend\Source">
+        <arguments>
+            <argument name="validator" xsi:type="object">Mobtexting\SMSNotifications\Model\SourceValidator</argument>
+        </arguments>
+    </type>
+    <type name="Mobtexting\SMSNotifications\Model\MessageService">
+        <arguments>
+            <argument name="logger" xsi:type="object">Mobtexting\SMSNotifications\Logger\Logger</argument>
+        </arguments>
+    </type>
+    <type name="Mobtexting\SMSNotifications\Model\MobileTelephoneNumberManagement">
+        <arguments>
+            <argument name="logger" xsi:type="object">Mobtexting\SMSNotifications\Logger\Logger</argument>
+        </arguments>
+    </type>
+    <type name="Mobtexting\SMSNotifications\Model\SmsSender\CreditmemoSender">
+        <arguments>
+            <argument name="logger" xsi:type="object">Mobtexting\SMSNotifications\Logger\Logger</argument>
+        </arguments>
+    </type>
+    <type name="Mobtexting\SMSNotifications\Model\SmsSender\OrderSender">
+        <arguments>
+            <argument name="logger" xsi:type="object">Mobtexting\SMSNotifications\Logger\Logger</argument>
+        </arguments>
+    </type>
+    <type name="Mobtexting\SMSNotifications\Model\SmsSender\ShipmentSender">
+        <arguments>
+            <argument name="logger" xsi:type="object">Mobtexting\SMSNotifications\Logger\Logger</argument>
+        </arguments>
+    </type>
+    <type name="Mobtexting\SMSNotifications\Model\SmsSubscription">
+        <arguments>
+            <argument name="validator" xsi:type="object">Mobtexting\SMSNotifications\Model\SmsSubscriptionValidator</argument>
+        </arguments>
+    </type>
+    <type name="Mobtexting\SMSNotifications\Model\SmsSubscriptionManagement">
+        <arguments>
+            <argument name="logger" xsi:type="object">Mobtexting\SMSNotifications\Logger\Logger</argument>
+        </arguments>
+    </type>
+    <type name="Mobtexting\SMSNotifications\Model\SmsSubscriptionValidator">
+        <arguments>
+            <argument name="validationRules" xsi:type="object">Mobtexting\SMSNotifications\Model\SmsSubscriptionValidationRules</argument>
+        </arguments>
+    </type>
+    <type name="Mobtexting\SMSNotifications\Model\SourceValidator">
+        <arguments>
+            <argument name="validationRules" xsi:type="object">Mobtexting\SMSNotifications\Model\SourceValidationRules</argument>
+        </arguments>
+    </type>
+    <type name="Mobtexting\SMSNotifications\Plugin\Sales\Api\CreditmemoRepositoryInterfacePlugin">
+        <arguments>
+            <argument name="smsSender" xsi:type="object">Mobtexting\SMSNotifications\Model\SmsSender\CreditmemoSender</argument>
+        </arguments>
+    </type>
+    <type name="Mobtexting\SMSNotifications\Plugin\Sales\Api\OrderRepositoryInterfacePlugin">
+        <arguments>
+            <argument name="smsSender" xsi:type="object">Mobtexting\SMSNotifications\Model\SmsSender\OrderSender</argument>
+        </arguments>
+    </type>
+    <type name="Mobtexting\SMSNotifications\Plugin\Sales\Model\Order\InvoicePlugin">
+        <arguments>
+            <argument name="smsSender" xsi:type="object">Mobtexting\SMSNotifications\Model\SmsSender\InvoiceSender</argument>
+        </arguments>
+    </type>
+    <type name="Mobtexting\SMSNotifications\Plugin\Sales\Model\ResourceModel\Order\ShipmentPlugin">
+        <arguments>
+            <argument name="smsSender" xsi:type="object">Mobtexting\SMSNotifications\Model\SmsSender\ShipmentSender</argument>
+        </arguments>
+    </type>
+    <type name="Mobtexting\SMSNotifications\Setup\Patch\Data\ImportTelephonePrefixes">
+        <arguments>
+            <argument name="logger" xsi:type="object">Mobtexting\SMSNotifications\Logger\Logger</argument>
+        </arguments>
+    </type>
+    <type name="Mobtexting\SMSNotifications\Util\TemplateProcessor">
+        <arguments>
+            <argument name="converter" xsi:type="object">Zend\Filter\Word\SeparatorToCamelCase</argument>
+        </arguments>
+    </type>
+    <type name="Mobtexting\SMSNotifications\ViewModel\CustomerSmsSubscriptions">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Mobtexting\SMSNotifications\ViewModel\MobileTelephone">
+        <arguments>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Config\Model\Config\TypePool">
+        <arguments>
+            <argument name="sensitive" xsi:type="array">
+                <item name="sms_notifications/api/password" xsi:type="string">1</item>
+                <item name="sms_notifications/api/platform_id" xsi:type="string">1</item>
+                <item name="sms_notifications/api/platform_partner_id" xsi:type="string">1</item>
+                <item name="sms_notifications/api/gate_id" xsi:type="string">1</item>
+            </argument>
+            <argument name="environment" xsi:type="array">
+                <item name="sms_notifications/general/enabled" xsi:type="string">1</item>
+                <item name="sms_notifications/api/username" xsi:type="string">1</item>
+                <item name="sms_notifications/api/source_type" xsi:type="string">1</item>
+                <item name="sms_notifications/api/source" xsi:type="string">1</item>
+                <item name="sms_notifications/developer/debug" xsi:type="string">1</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Sales\Api\CreditmemoRepositoryInterface">
+        <plugin name="sms_notifications_send_refund_sms" type="Mobtexting\SMSNotifications\Plugin\Sales\Api\CreditmemoRepositoryInterfacePlugin"/>
+    </type>
+    <type name="Magento\Sales\Api\OrderRepositoryInterface">
+        <plugin name="sms_notifications_send_order_sms" type="Mobtexting\SMSNotifications\Plugin\Sales\Api\OrderRepositoryInterfacePlugin"/>
+    </type>
+    <type name="Magento\Sales\Model\Order">
+        <plugin name="sms_notifications_add_order_extension_attribute" type="Mobtexting\SMSNotifications\Plugin\Sales\Model\OrderPlugin"/>
+    </type>
+    <type name="Magento\Sales\Model\Order\Invoice">
+        <plugin name="sms_notifications_send_order_invoiced_sms" type="Mobtexting\SMSNotifications\Plugin\Sales\Model\Order\InvoicePlugin"/>
+    </type>
+    <type name="Magento\Sales\Model\ResourceModel\Order\Shipment">
+        <plugin name="sms_notifications_send_shipment_sms" type="Mobtexting\SMSNotifications\Plugin\Sales\Model\ResourceModel\Order\ShipmentPlugin"/>
+    </type>
+</config>

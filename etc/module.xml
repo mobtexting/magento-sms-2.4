@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Mobtexting SMS Notifications powered by LINK Mobility
+ *
+ * Sends transactional SMS notifications through the LINK Mobility messaging
+ * service.
+ * 
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Mobtexting_SMSNotifications">
+        <sequence>
+            <module name="Magento_Customer"/>
+            <module name="Magento_Sales"/>
+        </sequence>
+    </module>
+</config>

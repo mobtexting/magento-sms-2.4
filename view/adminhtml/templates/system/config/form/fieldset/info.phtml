@@ -1,0 +1,12 @@
+<?php
+
+/** @var \Magento\Backend\Block\Template $block */
+?>
+<section id="sms-notifications-info" class="section-config">
+    <header>
+        <p class="logo"><img src="<?= $block->getViewFileUrl('Mobtexting_SMSNotifications::images/sms-notifications-logo.png') ?>" alt="Mobtexting SMS Notifications powered by LINK Mobility" width="250" height="250"></p>
+    </header>
+    <main>
+        <?= $block->escapeHtml($block->getData('info_text'), ['p', 'ul', 'li', 'a', 'strong', 'em']) ?>
+    </main>
+</section>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Mobtexting SMS Notifications powered by LINK Mobility
+ *
+ * Sends transactional SMS notifications through the LINK Mobility messaging
+ * service.
+ *
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Mobtexting\SMSNotifications\Controller\SmsNotifications\ManagePost">
+        <arguments>
+            <argument name="logger" xsi:type="object">Mobtexting\SMSNotifications\Logger\Logger</argument>
+            <argument name="customerSession" xsi:type="object">Magento\Customer\Model\Session\Proxy</argument>
+            <argument name="smsSender" xsi:type="object">Mobtexting\SMSNotifications\Model\SmsSender\WelcomeSender</argument>
+        </arguments>
+    </type>
+    <type name="Mobtexting\SMSNotifications\Observer\CustomerRegisterSuccessObserver">
+        <arguments>
+            <argument name="smsSender" xsi:type="object">Mobtexting\SMSNotifications\Model\SmsSender\WelcomeSender</argument>
+        </arguments>
+    </type>
+</config>

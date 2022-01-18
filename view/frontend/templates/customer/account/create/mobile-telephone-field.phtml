@@ -1,0 +1,33 @@
+<?php
+/**
+ * Mobtexting SMS Notifications 
+ *
+ * Sends transactional SMS notifications 
+ * 
+ */
+
+/** @var \Mobtexting\SMSNotifications\Block\Customer\Account\Create\MobileTelephoneField $block */
+
+/** @var \Mobtexting\SMSNotifications\ViewModel\TelephonePrefixes $telephonePrefixesViewModel */
+$telephonePrefixesViewModel = $block->getData('telephone_prefixes_view_model');
+?>
+<div class="field mobile-telephone-number" id="mobile-telephone-number-field" data-bind="scope: 'sms-mobile-telephone'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<script type="text/x-magento-init">
+    {
+        "#mobile-telephone-number-field": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "sms-mobile-telephone": {
+                        "component": "Mobtexting_SMSNotifications/js/view/mobile-telephone-field",
+                        "config": {
+                            "mobileTelephonePrefixOptions": <?= \json_encode($telephonePrefixesViewModel->getOptions()) ?>,
+                            "defaultMobileTelephonePrefix": "<?= /** @noEscape */ $telephonePrefixesViewModel->getDefaultPrefix() ?>"
+                        }
+                    }
+                }
+            }
+        }
+    }
+</script>

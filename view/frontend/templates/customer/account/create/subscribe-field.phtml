@@ -1,0 +1,20 @@
+
+<?php /** @var \Mobtexting\SMSNotifications\Block\Customer\Account\Create\SubscribeField $block */ ?>
+<div class="field choice sms-notification-subscription" id="sms-notification-subscription-field" data-bind="scope: 'sms-notification-subscription'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<script type="text/x-magento-init">
+    {
+        "#sms-notification-subscription-field": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "sms-notification-subscription": {
+                        "component": "Mobtexting_SMSNotifications/js/view/sms-notification-subscription",
+                        "isOptinRequired": <?= /* @noEscape */ $block->isOptinRequired() ? 'true' : 'false' ?>,
+                        "isTermsAndConditionsShownAfterOptin": <?= /* @noEscape */ $block->isTermsAndConditionsShownAfterOptin() ? 'true' : 'false' ?>
+                    }
+                }
+            }
+        }
+    }
+</script>

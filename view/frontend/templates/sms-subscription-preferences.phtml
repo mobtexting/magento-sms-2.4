@@ -1,0 +1,24 @@
+<?php
+
+/** @var \Magento\Framework\View\Element\Template $block */
+
+$groupedSmsTypes = $block->getData('sms_types_view_model')->getGroupedSmsTypes();
+?>
+<div data-bind="scope: 'sms-subscription-preferences-component'" class="sms-subscription-preferences-container">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "sms-subscription-preferences-component": {
+                        "component": "Mobtexting_SMSNotifications/js/view/sms-subscription-preferences",
+                        "groupedSmsTypes": <?= /* @noEscape */ \json_encode($groupedSmsTypes) ?>,
+                        "modalTitle": "<?= $block->escapeJs(__('Text Notification Preferences')) ?>"
+                    }
+                }
+            }
+        }
+    }
+</script>
