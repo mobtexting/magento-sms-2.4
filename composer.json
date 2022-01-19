@@ -1,5 +1,5 @@
 {
-    "name": "mobtexting/magento2.4-sms-notifications",
+    "name": "mobtexting/magento-sms-2.4",
     "description": "Sends transactional SMS notifications",
     "type": "magento2-module",
     "version": "1.0.",
